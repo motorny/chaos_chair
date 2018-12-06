@@ -20,7 +20,7 @@ img = PhotoImage(width=width, height=height)
 base_points = []
 current = np.array([width / 2,height / 2], float)
 def setup() :
-    base_points_cnt = 5
+    base_points_cnt = 4
 
     for i in range(base_points_cnt):
         angle = i * math.pi * 2/ base_points_cnt
@@ -40,7 +40,7 @@ def lerp(v1, v2, d):
     return v1 * (1 - d) + v2 * d
 
 
-previousInd = None
+previousInd = 0
 def draw(frame):
     if frame % 100 == 0:
         reset_image()
@@ -48,11 +48,13 @@ def draw(frame):
     global current
 
     for i in range(1000):
-        nextInd = random.randint(0,len(base_points) - 1)
+        nextInd = (previousInd + random.randint(-1, 1)) % len(base_points)
+        #nextInd = random.randint(0,len(base_points) - 1)
         next = base_points[nextInd]
-        if nextInd != previousInd:
-            current = lerp(current, next, percent)
-            img.put("#ffffff", (int(current[0]), int(current[1])))
+        #if nextInd + previousInd != len(base_points):
+        current = lerp(current, next, percent)
+        img.put("#ffffff", (int(current[0]), int(current[1])))
+            #canvas.create_oval(int(current[0]), int(current[1]), int(current[0]), int(current[1]), width=0, fill='white')
         previousInd = nextInd
 
 max_frame = 300
