@@ -7,7 +7,8 @@ import colorsys
 import numpy as np
 import cv2
 
-from chaos_chair.utils import lerp
+def lerp(v1, v2, d):
+    return v1 * (1 - d) + v2 * d
 
 
 class Canvas:
